@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import TMDBLogo from './TMDBLogo';
 
 const ButtonAppBar: React.FC = () => {
   return (
@@ -22,19 +22,9 @@ const ButtonAppBar: React.FC = () => {
             <MenuIcon />
           </IconButton>
 
-          {/* TMDB logo textual */}
-          <Typography variant="h6" component="div" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-            <span style={{ color: '#90CEA1', fontWeight: 'bold' }}>TMDB</span>
-            <Box
-              sx={{
-                width: 30,
-                height: 16,
-                bgcolor: '#01B4E4',
-                borderRadius: 2,
-                ml: 1,
-              }}
-            />
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <TMDBLogo />
+          </Box>
 
           <Button color="inherit">Login</Button>
         </Toolbar>
