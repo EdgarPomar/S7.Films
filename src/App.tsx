@@ -1,12 +1,13 @@
-import './App.css'
+import ButtonAppBar from "./components/ButtonAppBar";
+
+
 
 function App() {
-
   return (
-    <>
-      hola
-    </>
-  )
+    <div style={{ padding: 20 }}>
+      <ButtonAppBar/>
+    </div>
+  );
 }
 
-export default App
+export default App;
