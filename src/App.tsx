@@ -8,7 +8,7 @@ function App() {
         minHeight: '150vh',
         background: 'radial-gradient(circle at top, #1b1b1b, #000)',
         color: '#e0e0e0',
-        paddingTop: 64, // deixa espai per la AppBar
+        paddingTop: 32, // deixa espai per la AppBar
         paddingLeft: 16,
         paddingRight: 16,
         paddingBottom: 32,
