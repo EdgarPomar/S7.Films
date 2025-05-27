@@ -6,11 +6,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom'; // 👉 Afegit
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w300';
 
 const FilmList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate(); // 👉 Afegit
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const { items: films, loading, error, page } = useSelector((state: RootState) => state.films);
@@ -19,7 +21,6 @@ const FilmList: React.FC = () => {
     dispatch(fetchFilmsThunk());
   }, [dispatch]);
 
-  // Scroll infinito: detecta cuando el último elemento entra en pantalla
   const lastFilmRef = useCallback(
     (node: HTMLDivElement) => {
       if (loading) return;
@@ -52,10 +53,12 @@ const FilmList: React.FC = () => {
               ref={isLast ? lastFilmRef : null}
             >
               <Box
+                onClick={() => navigate(`/film/${film.id}`)} // 👉 Navega a la pàgina de detall
                 sx={{
                   position: 'relative',
                   overflow: 'hidden',
                   borderRadius: 2,
+                  cursor: 'pointer', // 🖱️ mostra que és clicable
                   '&:hover .overlay': {
                     opacity: 1,
                   },

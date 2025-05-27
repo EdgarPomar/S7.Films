@@ -30,3 +30,9 @@ export const fetchStarWarsFilms = async (): Promise<Film[]> => {
     poster_path: film.poster_path,
   }));
 };
+
+export const fetchFilmDetail = async (id: number) => {
+  const res = await tmdb.get(`/movie/${id}`, { params: { append_to_response: 'credits' } });
+  return res.data;
+};
+
