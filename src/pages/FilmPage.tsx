@@ -6,6 +6,9 @@ import {
   Typography,
   Avatar,
   CircularProgress,
+  Card,
+  CardContent,
+  Chip,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import { motion } from 'framer-motion';
@@ -33,7 +36,15 @@ export default function FilmPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Box
+        sx={{
+          p: 3,
+          mt: '2px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         <img
           src={`${IMAGE_BASE_URL}${film.poster_path}`}
           alt={film.title}
@@ -42,21 +53,40 @@ export default function FilmPage() {
 
         <Typography variant="h4" gutterBottom>{film.title}</Typography>
 
-        <Typography variant="body1" sx={{ maxWidth: '600px', textAlign: 'center', mb: 2 }}>
+        {/* Rating + Gèneres */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+          <Typography variant="body1" sx={{ color: '#ffc107', fontWeight: 'bold' }}>
+            ⭐ {film.vote_average?.toFixed(1)} / 10
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center', mt: 1 }}>
+            {film.genres?.map((genre: any) => (
+              <Chip
+                key={genre.id}
+                label={genre.name}
+                variant="outlined"
+                size="small"
+                sx={{ color: '#fff', borderColor: '#555' }}
+              />
+            ))}
+          </Box>
+        </Box>
+
+        <Typography variant="body1" sx={{ maxWidth: '600px', textAlign: 'center', mb: 4 }}>
           {film.overview || 'No hi ha descripció disponible.'}
         </Typography>
 
-        {/* Fitxes autors */}
-        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
+        {/* AUTORS */}
+        <Typography variant="h6" gutterBottom align="center" sx={{ width: '100%' }}>
           Autors:
         </Typography>
         <Box
           sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
             gap: 2,
-            mt: 2,
+            width: '100%',
+            maxWidth: 1000,
+            mb: 4,
           }}
         >
           {film.credits?.crew
@@ -64,17 +94,17 @@ export default function FilmPage() {
               ['Director', 'Writer', 'Screenplay', 'Story'].includes(person.job)
             )
             .map((person: any) => (
-              <Box
+              <Card
                 key={person.id}
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
                   backgroundColor: '#1e1e1e',
+                  color: '#e0e0e0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  p: 2,
                   borderRadius: 2,
-                  padding: 1.5,
-                  boxShadow: 1,
-                  minWidth: 240,
-                  maxWidth: 280,
+                  boxShadow: 3,
                 }}
               >
                 <Avatar
@@ -83,48 +113,45 @@ export default function FilmPage() {
                       ? `${PROFILE_BASE_URL}${person.profile_path}`
                       : undefined
                   }
-                  sx={{ width: 56, height: 56, mr: 2 }}
+                  sx={{ width: 72, height: 72, mb: 1 }}
                 >
                   {!person.profile_path && <PersonIcon />}
                 </Avatar>
-                <Box>
-                  <Typography variant="body1" sx={{ color: '#e0e0e0' }}>
-                    {person.name}
-                  </Typography>
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="subtitle1">{person.name}</Typography>
                   <Typography variant="body2" sx={{ color: '#aaa' }}>
                     {person.job}
                   </Typography>
-                </Box>
-              </Box>
+                </CardContent>
+              </Card>
             ))}
         </Box>
 
-        {/* Fitxes actors */}
-        <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
+        {/* ACTORS */}
+        <Typography variant="h6" gutterBottom align="center" sx={{ width: '100%' }}>
           Actors principals:
         </Typography>
-
         <Box
           sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
             gap: 2,
-            mt: 2,
+            width: '100%',
+            maxWidth: 1000,
           }}
         >
           {film.credits?.cast?.map((actor: any) => (
-            <Box
+            <Card
               key={actor.id}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
                 backgroundColor: '#1e1e1e',
+                color: '#e0e0e0',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                p: 2,
                 borderRadius: 2,
-                padding: 1.5,
-                boxShadow: 1,
-                minWidth: 240,
-                maxWidth: 280,
+                boxShadow: 3,
               }}
             >
               <Avatar
@@ -133,21 +160,19 @@ export default function FilmPage() {
                     ? `${PROFILE_BASE_URL}${actor.profile_path}`
                     : undefined
                 }
-                sx={{ width: 56, height: 56, mr: 2 }}
+                sx={{ width: 72, height: 72, mb: 1 }}
               >
                 {!actor.profile_path && <PersonIcon />}
               </Avatar>
-              <Box>
-                <Typography variant="body1" sx={{ color: '#e0e0e0' }}>
-                  {actor.name}
-                </Typography>
+              <CardContent sx={{ textAlign: 'center' }}>
+                <Typography variant="subtitle1">{actor.name}</Typography>
                 {actor.character && (
                   <Typography variant="body2" sx={{ color: '#aaa' }}>
                     com {actor.character}
                   </Typography>
                 )}
-              </Box>
-            </Box>
+              </CardContent>
+            </Card>
           ))}
         </Box>
       </Box>
