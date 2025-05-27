@@ -23,19 +23,15 @@ const FilmList: React.FC = () => {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center" // 💡 centra los items en el eje horizontal
-      >
+      <Grid container spacing={2} justifyContent="center">
         {films.map((film) => (
           <Grid
             item
             key={film.id}
-            xs={6}
-            sm={4}
-            md={2.4}
-            sx={{ display: 'flex', justifyContent: 'center' }} // 💡 centra cada tarjeta
+            xs={6}  // 2 columnas en móvil
+            sm={4}  // 3 columnas en tablet
+            md={3}  // 4 columnas en escritorio
+            lg={2}  // 6 columnas en pantallas grandes
           >
             <Card sx={{ borderRadius: 2, width: '100%' }}>
               <CardMedia
