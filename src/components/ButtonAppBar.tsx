@@ -1,13 +1,40 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Avatar,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import TMDBLogo from './TMDBLogo';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonAppBar: React.FC = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogin = () => {
+    handleClose();
+    navigate('/login');
+  };
+
+  const handleRegister = () => {
+    handleClose();
+    navigate('/register');
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#032541' }}>
@@ -26,7 +53,20 @@ const ButtonAppBar: React.FC = () => {
             <TMDBLogo />
           </Box>
 
-          <Button color="inherit">Login</Button>
+          <IconButton onClick={handleMenu} color="inherit">
+            <Avatar>
+              <AccountCircle />
+            </Avatar>
+          </IconButton>
+
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleLogin}>Iniciar sessió</MenuItem>
+            <MenuItem onClick={handleRegister}>Registrar-se</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>

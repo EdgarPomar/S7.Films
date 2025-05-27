@@ -1,7 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ButtonAppBar from './components/ButtonAppBar';
 import FilmList from './components/FilmList';
-import FilmPage from './pages/FilmPage'; // si tienes página detalle
+import FilmPage from './pages/FilmPage';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import PrivateRoute from './components/PrivateRoute';
+import ProfilePage from './components/ProfilePage';
+
 
 function App() {
   return (
@@ -21,6 +26,20 @@ function App() {
         <Routes>
           <Route path="/" element={<FilmList />} />
           <Route path="/film/:id" element={<FilmPage />} />
+
+          {/* Rutes per autenticació */}
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+
+          {/* Ruta protegida */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
