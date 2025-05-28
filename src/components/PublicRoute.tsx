@@ -1,13 +1,12 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../api/supabaseClient';
 
-interface PrivateRouteProps {
+interface PublicRouteProps {
   children: JSX.Element;
 }
 
-const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const location = useLocation();
+const PublicRoute = ({ children }: PublicRouteProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -21,15 +20,15 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>; // O un spinner si vols
+    return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    // Guarda on volia anar l'usuari per redirigir després del login
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  // Si està autenticat, redirigeix a l'inici o a la pàgina que vulguis
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
   }
 
   return children;
 };
 
-export default PrivateRoute;
+export default PublicRoute;

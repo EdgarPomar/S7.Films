@@ -5,8 +5,8 @@ import FilmPage from './pages/FilmPage';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 import ProfilePage from './components/ProfilePage';
-
 
 function App() {
   return (
@@ -28,8 +28,22 @@ function App() {
           <Route path="/film/:id" element={<FilmPage />} />
 
           {/* Rutes per autenticació */}
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginForm />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <RegisterForm />
+              </PublicRoute>
+            }
+          />
 
           {/* Ruta protegida */}
           <Route
