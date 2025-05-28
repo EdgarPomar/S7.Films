@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchFilmDetail } from '../api/tmdb';
 import {
@@ -18,17 +18,22 @@ const PROFILE_BASE_URL = 'https://image.tmdb.org/t/p/w185';
 
 export default function FilmPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [film, setFilm] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!id) return;
     fetchFilmDetail(Number(id)).then((data) => {
       setFilm(data);
       setLoading(false);
     });
   }, [id]);
 
-  if (loading) return <CircularProgress sx={{ display: 'block', mx: 'auto', mt: 4 }} />;
+  if (loading)
+    return (
+      <CircularProgress sx={{ display: 'block', mx: 'auto', mt: 4 }} />
+    );
 
   return (
     <motion.div
@@ -51,14 +56,34 @@ export default function FilmPage() {
           style={{ width: '200px', borderRadius: '10px', marginBottom: '1rem' }}
         />
 
-        <Typography variant="h4" gutterBottom>{film.title}</Typography>
+        <Typography variant="h4" gutterBottom>
+          {film.title}
+        </Typography>
 
         {/* Rating + Gèneres */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-          <Typography variant="body1" sx={{ color: '#ffc107', fontWeight: 'bold' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mb: 2,
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{ color: '#ffc107', fontWeight: 'bold' }}
+          >
             ⭐ {film.vote_average?.toFixed(1)} / 10
           </Typography>
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center', mt: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              mt: 1,
+            }}
+          >
             {film.genres?.map((genre: any) => (
               <Chip
                 key={genre.id}
@@ -71,7 +96,10 @@ export default function FilmPage() {
           </Box>
         </Box>
 
-        <Typography variant="body1" sx={{ maxWidth: '600px', textAlign: 'center', mb: 4 }}>
+        <Typography
+          variant="body1"
+          sx={{ maxWidth: '600px', textAlign: 'center', mb: 4 }}
+        >
           {film.overview || 'No hi ha descripció disponible.'}
         </Typography>
 
@@ -143,6 +171,7 @@ export default function FilmPage() {
           {film.credits?.cast?.map((actor: any) => (
             <Card
               key={actor.id}
+              onClick={() => navigate(`/actor/${actor.id}`)}
               sx={{
                 backgroundColor: '#1e1e1e',
                 color: '#e0e0e0',
@@ -152,6 +181,10 @@ export default function FilmPage() {
                 p: 2,
                 borderRadius: 2,
                 boxShadow: 3,
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: '#333',
+                },
               }}
             >
               <Avatar

@@ -36,3 +36,12 @@ export const fetchFilmDetail = async (id: number) => {
   return res.data;
 };
 
+export async function fetchActorDetails(actorId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ca-ES`);
+  return res.json();
+}
+
+export async function fetchActorMovies(actorId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ca-ES`);
+  return res.json();
+}
