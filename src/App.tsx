@@ -8,6 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import ProfilePage from './components/ProfilePage';
 import ActorPage from './pages/ActorPage';
+import AuthorPage from './pages/AuthorPage';
 
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
           <Route path="/" element={<FilmList />} />
           <Route path="/film/:id" element={<FilmPage />} />
           <Route path="/actor/:id" element={<ActorPage />} />
+          <Route path="/author/:id" element={<AuthorPage />} />
+
 
           {/* Rutes per autenticació */}
           <Route

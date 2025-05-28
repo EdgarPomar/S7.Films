@@ -10,7 +10,6 @@ import {
   CardContent,
   Chip,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 import { motion } from 'framer-motion';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -124,6 +123,7 @@ export default function FilmPage() {
             .map((person: any) => (
               <Card
                 key={person.id}
+                onClick={() => navigate(`/author/${person.id}`)}
                 sx={{
                   backgroundColor: '#1e1e1e',
                   color: '#e0e0e0',
@@ -133,6 +133,10 @@ export default function FilmPage() {
                   p: 2,
                   borderRadius: 2,
                   boxShadow: 3,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: '#333',
+                  },
                 }}
               >
                 <Avatar
@@ -142,9 +146,7 @@ export default function FilmPage() {
                       : undefined
                   }
                   sx={{ width: 72, height: 72, mb: 1 }}
-                >
-                  {!person.profile_path && <PersonIcon />}
-                </Avatar>
+                />
                 <CardContent sx={{ textAlign: 'center' }}>
                   <Typography variant="subtitle1">{person.name}</Typography>
                   <Typography variant="body2" sx={{ color: '#aaa' }}>
@@ -194,9 +196,7 @@ export default function FilmPage() {
                     : undefined
                 }
                 sx={{ width: 72, height: 72, mb: 1 }}
-              >
-                {!actor.profile_path && <PersonIcon />}
-              </Avatar>
+              />
               <CardContent sx={{ textAlign: 'center' }}>
                 <Typography variant="subtitle1">{actor.name}</Typography>
                 {actor.character && (

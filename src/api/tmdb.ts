@@ -8,9 +8,7 @@ export interface Film {
 }
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-// const BASE_URL = 'https://api.themoviedb.org/3';
 const BASE_URL = 'https://api.themoviedb.org/3';
-// const COLLECTION_ID = 10; // Star Wars Collection
 
 const tmdb = axios.create({
   baseURL: BASE_URL,
@@ -22,7 +20,6 @@ const tmdb = axios.create({
 
 export const fetchStarWarsFilms = async (): Promise<Film[]> => {
   const response = await tmdb.get(`/discover/movie?api_key=${API_KEY}`);
-  console.log(response);
   return response.data.results.map((film: any) => ({
     id: film.id,
     title: film.title,
@@ -37,11 +34,22 @@ export const fetchFilmDetail = async (id: number) => {
 };
 
 export async function fetchActorDetails(actorId: number) {
-  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ca-ES`);
+  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}?api_key=${API_KEY}&language=ca-ES`);
   return res.json();
 }
 
 export async function fetchActorMovies(actorId: number) {
-  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=ca-ES`);
+  const res = await fetch(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${API_KEY}&language=ca-ES`);
+  return res.json();
+}
+
+// 🔄 NOVES FUNCIONS PER ALS AUTORS (crew)
+export async function fetchAuthorDetails(authorId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${authorId}?api_key=${API_KEY}&language=ca-ES`);
+  return res.json();
+}
+
+export async function fetchAuthorMovies(authorId: number) {
+  const res = await fetch(`https://api.themoviedb.org/3/person/${authorId}/movie_credits?api_key=${API_KEY}&language=ca-ES`);
   return res.json();
 }
