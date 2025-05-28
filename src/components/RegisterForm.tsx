@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Alert } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../api/supabaseClient'; // 👈 importa Supabase
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -8,10 +9,11 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
@@ -27,10 +29,19 @@ export default function RegisterPage() {
       return;
     }
 
-    // Fake registre (guardar localStorage)
-    localStorage.setItem('user', JSON.stringify({ email }));
-    setError('');
-    navigate('/login');
+    // 👉 Registro real con Supabase
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (signUpError) {
+      setError(signUpError.message);
+    } else {
+      setError('');
+      setSuccess('Registre completat! Comprova el teu correu electrònic.');
+      setTimeout(() => navigate('/login'), 3000);
+    }
   };
 
   return (
@@ -58,6 +69,7 @@ export default function RegisterPage() {
       </Typography>
 
       {error && <Alert severity="error">{error}</Alert>}
+      {success && <Alert severity="success">{success}</Alert>}
 
       <TextField
         label="Email"

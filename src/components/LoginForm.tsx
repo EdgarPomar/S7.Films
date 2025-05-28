@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Alert } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../api/supabaseClient'; // 👈 import Supabase
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -8,15 +9,21 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Exemple simple validació i "login" fake
-    if (email === 'test@test.com' && password === '123456') {
-      localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/profile');
+    const { data, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (loginError) {
+      setError('Credencials incorrectes o usuari no registrat.');
     } else {
-      setError('Credencials incorrectes.');
+      setError('');
+      // Guarda usuari en localStorage si vols fer persistència bàsica
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/profile');
     }
   };
 
