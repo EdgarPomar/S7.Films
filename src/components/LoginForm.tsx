@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Alert } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
-import { supabase } from '../api/supabaseClient'; // 👈 import Supabase
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { supabase } from '../api/supabaseClient';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,9 +24,8 @@ export default function LoginPage() {
       setError('Credencials incorrectes o usuari no registrat.');
     } else {
       setError('');
-      // Guarda usuari en localStorage si vols fer persistència bàsica
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/');
+      navigate(from, { replace: true });
     }
   };
 
