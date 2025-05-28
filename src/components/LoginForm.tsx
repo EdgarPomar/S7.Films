@@ -23,7 +23,7 @@ export default function LoginPage() {
       setError('');
       // Guarda usuari en localStorage si vols fer persistència bàsica
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/profile');
+      navigate('/');
     }
   };
 
