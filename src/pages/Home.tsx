@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: `url('/background-cinema.jpg')`, // 🖼 opcional si tens un fons
+        backgroundImage: `url('/cinema-background.jpg')`, // 🖼 opcional si tens un fons
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundColor: '#000', // fons negre de reserva
