@@ -53,3 +53,8 @@ export async function fetchAuthorMovies(authorId: number) {
   const res = await fetch(`https://api.themoviedb.org/3/person/${authorId}/movie_credits?api_key=${API_KEY}&language=ca-ES`);
   return res.json();
 }
+
+export async function fetchGenres() {
+  const res = await tmdb.get('/genre/movie/list');
+  return res.data.genres; // [{ id: 28, name: "Action" }, ...]
+}

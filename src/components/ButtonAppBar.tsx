@@ -14,22 +14,34 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import TMDBLogo from './TMDBLogo';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../api/supabaseClient';
+import { fetchGenres } from '../api/tmdb';
 
+interface Genre {
+  id: number;
+  name: string;
+}
 
 const ButtonAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [genreAnchorEl, setGenreAnchorEl] = useState<null | HTMLElement>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const navigate = useNavigate();
 
-  // Comprovar si hi ha usuari actiu
   useEffect(() => {
     const getUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUserEmail(session?.user.email ?? null);
     };
-    getUser();
 
-    // Escoltar canvis en sessió (login/logout)
+    const loadGenres = async () => {
+      const genreList = await fetchGenres();
+      setGenres(genreList);
+    };
+
+    getUser();
+    loadGenres();
+
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserEmail(session?.user.email ?? null);
     });
@@ -39,12 +51,22 @@ const ButtonAppBar: React.FC = () => {
     };
   }, []);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleGenreMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setGenreAnchorEl(event.currentTarget);
+  };
+
+  const handleGenreSelect = (genreId: number) => {
+    setGenreAnchorEl(null);
+    navigate(`/genre/${genreId}`);
+  };
+
+  const handleProfileMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setGenreAnchorEl(null);
   };
 
   const handleLogin = () => {
@@ -77,11 +99,23 @@ const ButtonAppBar: React.FC = () => {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleGenreMenu}
           >
             <MenuIcon />
           </IconButton>
+
+          <Menu
+            anchorEl={genreAnchorEl}
+            open={Boolean(genreAnchorEl)}
+            onClose={handleClose}
+          >
+            {genres.map((genre) => (
+              <MenuItem key={genre.id} onClick={() => handleGenreSelect(genre.id)}>
+                {genre.name}
+              </MenuItem>
+            ))}
+          </Menu>
 
           <Box sx={{ flexGrow: 1 }}>
             <TMDBLogo />
@@ -93,17 +127,13 @@ const ButtonAppBar: React.FC = () => {
             </Typography>
           )}
 
-          <IconButton onClick={handleMenu} color="inherit">
+          <IconButton onClick={handleProfileMenu} color="inherit">
             <Avatar>
               <AccountCircle />
             </Avatar>
           </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
             {userEmail ? (
               <>
                 <MenuItem onClick={handleProfile}>Perfil</MenuItem>

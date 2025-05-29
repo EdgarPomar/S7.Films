@@ -63,6 +63,14 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/films"
+            element={
+              <PrivateRoute>
+                <FilmList />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>
