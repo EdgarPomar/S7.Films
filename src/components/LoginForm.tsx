@@ -25,7 +25,7 @@ export default function LoginPage() {
     } else {
       setError('');
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate(from, { replace: true });
+      navigate('/films', { replace: true });
     }
   };
 
