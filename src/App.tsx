@@ -9,7 +9,7 @@ import PublicRoute from './components/PublicRoute';
 import ProfilePage from './components/ProfilePage';
 import ActorPage from './pages/ActorPage';
 import AuthorPage from './pages/AuthorPage';
-
+import Home from './pages/Home'; // ✅ Importat
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           minHeight: '150vh',
           background: 'radial-gradient(circle at top, #1b1b1b, #000)',
           color: '#e0e0e0',
-          paddingTop: 32, // espacio para AppBar
+          paddingTop: 32,
           paddingLeft: 16,
           paddingRight: 16,
           paddingBottom: 32,
@@ -27,11 +27,14 @@ function App() {
       >
         <ButtonAppBar />
         <Routes>
-          <Route path="/" element={<FilmList />} />
+          {/* 🏠 Nova home amb publicitat */}
+          <Route path="/" element={<Home />} />
+
+          {/* 🎬 Llista de pel·lícules a nova ruta */}
+          <Route path="/films" element={<FilmList />} />
           <Route path="/film/:id" element={<FilmPage />} />
           <Route path="/actor/:id" element={<ActorPage />} />
           <Route path="/author/:id" element={<AuthorPage />} />
-
 
           {/* Rutes per autenticació */}
           <Route
