@@ -25,7 +25,7 @@ const GenrePage: React.FC = () => {
         const filmRes = await axios.get(`https://api.themoviedb.org/3/discover/movie`, {
           params: {
             api_key: API_KEY,
-            language: 'ca-ES',
+            language: 'en',
             with_genres: id,
           },
         });

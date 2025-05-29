@@ -1,8 +1,14 @@
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, Button } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage() {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const navigate = useNavigate();
+
+  const goToFilms = () => {
+    navigate('/films');
+  };
 
   return (
     <Box
@@ -40,10 +46,13 @@ export default function ProfilePage() {
             <strong>Email:</strong> {user.email}
           </Typography>
 
-          {/* Afegir més dades en el futur */}
-          <Typography variant="body2" sx={{ color: '#aaa' }}>
+          <Typography variant="body2" sx={{ color: '#aaa', mb: 3 }}>
             La teva informació personal es mostrarà aquí.
           </Typography>
+
+          <Button variant="contained" color="primary" onClick={goToFilms}>
+            Veure pel·lícules
+          </Button>
         </>
       ) : (
         <Typography variant="body1" sx={{ color: '#aaa' }}>

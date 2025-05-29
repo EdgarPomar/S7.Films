@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import { useNavigate } from 'react-router-dom'; // 👉 Afegit
+import { useNavigate } from 'react-router-dom';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w300';
 
 const FilmList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate(); // 👉 Afegit
+  const navigate = useNavigate(); 
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const { items: films, loading, error, page } = useSelector((state: RootState) => state.films);
