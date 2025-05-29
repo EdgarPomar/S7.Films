@@ -6,7 +6,7 @@ import { supabase } from '../api/supabaseClient';
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || '/films';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +25,7 @@ export default function LoginPage() {
     } else {
       setError('');
       localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/films', { replace: true });
+      navigate(from, { replace: true });
     }
   };
 
