@@ -9,7 +9,8 @@ import PublicRoute from './components/PublicRoute';
 import ProfilePage from './components/ProfilePage';
 import ActorPage from './pages/ActorPage';
 import AuthorPage from './pages/AuthorPage';
-import Home from './pages/Home'; // ✅ Importat
+import Home from './pages/Home'; 
+import GenrePage from './pages/GenrePage';
 
 function App() {
   return (
@@ -27,51 +28,60 @@ function App() {
       >
         <ButtonAppBar />
         <Routes>
-          {/* 🏠 Nova home amb publicitat */}
-          <Route path="/" element={<Home />} />
+            {/* 🏠 Nova home amb publicitat */}
+            <Route path="/" element={<Home />} />
 
-          {/* 🎬 Llista de pel·lícules a nova ruta */}
-          <Route path="/films" element={<FilmList />} />
-          <Route path="/film/:id" element={<FilmPage />} />
-          <Route path="/actor/:id" element={<ActorPage />} />
-          <Route path="/author/:id" element={<AuthorPage />} />
+            {/* 🎬 Ruta protegida de pel·lícules */}
+            <Route
+              path="/films"
+              element={
+                <PrivateRoute>
+                  <FilmList />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/film/:id" element={<FilmPage />} />
+            <Route path="/actor/:id" element={<ActorPage />} />
+            <Route path="/author/:id" element={<AuthorPage />} />
 
-          {/* Rutes per autenticació */}
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <LoginForm />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <RegisterForm />
-              </PublicRoute>
-            }
-          />
+            {/* 📂 Ruta protegida per gènere */}
+            <Route
+              path="/genre/:id"
+              element={
+                <PrivateRoute>
+                  <GenrePage />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Ruta protegida */}
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <ProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/films"
-            element={
-              <PrivateRoute>
-                <FilmList />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
+            {/* 🔐 Rutes d'autenticació */}
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <LoginForm />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <PublicRoute>
+                  <RegisterForm />
+                </PublicRoute>
+              }
+            />
+
+            {/* 👤 Perfil d'usuari */}
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <ProfilePage />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
       </div>
     </BrowserRouter>
   );
