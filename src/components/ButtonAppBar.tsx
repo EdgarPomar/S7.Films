@@ -138,17 +138,16 @@ const ButtonAppBar: React.FC = () => {
           </IconButton>
 
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-            {userEmail ? (
-              <>
-                <MenuItem onClick={handleProfile}>Perfil</MenuItem>
-                <MenuItem onClick={handleLogout}>Tanca sessió</MenuItem>
-              </>
-            ) : (
-              <>
-                <MenuItem onClick={handleLogin}>Iniciar sessió</MenuItem>
-                <MenuItem onClick={handleRegister}>Registrar-se</MenuItem>
-              </>
-            )}
+            {userEmail
+              ? [
+                  <MenuItem onClick={handleProfile} key="profile">Perfil</MenuItem>,
+                  <MenuItem onClick={handleLogout} key="logout">Tanca sessió</MenuItem>,
+                ]
+              : [
+                  <MenuItem onClick={handleLogin} key="login">Iniciar sessió</MenuItem>,
+                  <MenuItem onClick={handleRegister} key="register">Registrar-se</MenuItem>,
+                ]
+            }
           </Menu>
         </Toolbar>
       </AppBar>

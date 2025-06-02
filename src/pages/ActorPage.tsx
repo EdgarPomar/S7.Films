@@ -100,7 +100,7 @@ export default function ActorPage() {
           )}
 
           {movies.map((movie) => (
-            <Grid item xs={6} sm={4} md={3} key={movie.id}>
+            <Grid key={movie.id}>
               <Card
                 sx={{
                   backgroundColor: '#1e1e1e',

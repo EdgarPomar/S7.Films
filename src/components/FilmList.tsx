@@ -33,7 +33,7 @@ const FilmList: React.FC = () => {
     <Box sx={{ p: 2 }}>
       <Grid container spacing={2} justifyContent="center">
         {films.map((film: Film) => (
-          <Grid item key={film.id} xs={6} sm={4} md={3} lg={2}>
+          <Grid key={film.id}>
             <Box
               onClick={() => navigate(`/film/${film.id}`)}
               sx={{
