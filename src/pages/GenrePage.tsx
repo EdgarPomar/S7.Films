@@ -64,7 +64,7 @@ const GenrePage: React.FC = () => {
 
       <Grid container spacing={3}>
         {films.map((film) => (
-          <Grid item key={film.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid key={film.id}>
             <Card
               sx={{ bgcolor: '#1c1c1c', color: '#fff' }}
               onClick={() => navigate(`/film/${film.id}`)}

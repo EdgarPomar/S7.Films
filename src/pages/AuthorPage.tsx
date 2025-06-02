@@ -104,8 +104,8 @@ export default function AuthorPage() {
             </Typography>
           )}
 
-          {movies.map((movie: Movie) => (
-            <Grid key={movie.id}>
+          {movies.map((movie: Movie, index: number) => (
+            <Grid key={`${movie.id}-${index}`}>
               <Card
                 sx={{
                   backgroundColor: '#1e1e1e',
