@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../api/supabaseClient';
 
 interface PublicRouteProps {
-  children: JSX.Element;
+  children: React.JSX.Element;
 }
 
 const PublicRoute = ({ children }: PublicRouteProps) => {
