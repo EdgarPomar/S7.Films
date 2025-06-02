@@ -1,54 +1,79 @@
-# React + TypeScript + Vite
+# 🎬 S7.Films
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web de películas desarrollada con **React**, **TypeScript** y **Vite**, que consume la API de TMDB (The Movie Database). Permite explorar películas, ver detalles, navegar por géneros y gestionar la autenticación de usuarios con Supabase.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Listado de películas** con paginación y scroll infinito  
+- **Detalle de película** con información ampliada  
+- **Listado y detalle de actores y autores**  
+- **Navegación por géneros**  
+- **Autenticación de usuarios** (login, registro, perfil) usando Supabase  
+- **Diseño responsive** con Material-UI  
+- **Despliegue automático** en Vercel al actualizar el repositorio de GitHub  
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://react.dev/)
+- [TypeScript](https://www.themoviedb.org/documentation/api)
+- [Vite](https://vitejs.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Material-UI](https://mui.com/)
+- [Supabase](https://supabase.com/)
+- [TMDB API](https://www.themoviedb.org/documentation/api)
+- [Vercel](https://vercel.com/) (deploy automático)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📦 Instalación y uso local
+
+1. **Clona el repositorio**
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+git clone https://github.com/EdgarPomar/S7.Films.git
+cd S7.Films
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
 ```
+
+2. **Instala las dependencias**
+```
+
+npm install
+
+```
+
+3. **Configura las variables de entorno**
+
+Crea un archivo `.env` en la raíz del proyecto con tus claves de TMDB y Supabase:
+
+```
+
+VITE_TMDB_API_KEY=tu_clave_tmdb
+VITE_SUPABASE_URL=tu_url_supabase
+VITE_SUPABASE_ANON_KEY=tu_anon_key_supabase
+
+```
+
+4. **Inicia la aplicación**
+```
+
+npm run dev
+
+```
+
+5. **Abre en tu navegador**
+```
+
+http://localhost:5173
+
+```
+
+## 🧑‍💻 Scripts útiles
+
+- `npm run dev` - Inicia el servidor de desarrollo  
+- `npm run build` - Genera una build de producción  
+- `npm run preview` - Previsualiza la build de producción  
+
+## 📝 Notas de desarrollo
+
+- El proyecto está basado en la plantilla oficial de Vite para React + TypeScript.
+- Se recomienda usar [ESLint](https://eslint.org/) y [Prettier](https://prettier.io/) para mantener la calidad del código.
+- El despliegue en Vercel es automático al hacer push a la rama principal (`main`).
