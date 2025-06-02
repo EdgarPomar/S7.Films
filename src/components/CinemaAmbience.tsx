@@ -6,6 +6,8 @@ export default function CinemaAmbience() {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
+      audio.volume = 0.3; // ✅ volumen aquí
+
       const playAudio = () => {
         audio.play().catch(() => {});
         document.removeEventListener('click', playAudio);
@@ -15,7 +17,7 @@ export default function CinemaAmbience() {
   }, []);
 
   return (
-    <audio ref={audioRef} loop volume={0.3}>
+    <audio ref={audioRef} loop>
       <source src="/cinema-ambience.mp3" type="audio/mpeg" />
     </audio>
   );
