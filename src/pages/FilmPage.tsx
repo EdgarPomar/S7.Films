@@ -120,9 +120,9 @@ export default function FilmPage() {
             ?.filter((person: any) =>
               ['Director', 'Writer', 'Screenplay', 'Story'].includes(person.job)
             )
-            .map((person: any, index: number) => (
+            .map((person: any) => (
               <Card
-                key={`${person.id}-${index}`}
+                key={person.id}
                 onClick={() => navigate(`/author/${person.id}`)}
                 sx={{
                   backgroundColor: '#1e1e1e',
@@ -170,9 +170,9 @@ export default function FilmPage() {
             maxWidth: 1000,
           }}
         >
-          {film.credits?.cast?.map((actor: any, index: number) => (
+          {film.credits?.cast?.map((actor: any) => (
             <Card
-              key={`${actor.id}-${index}`}
+              key={actor.id}
               onClick={() => navigate(`/actor/${actor.id}`)}
               sx={{
                 backgroundColor: '#1e1e1e',
