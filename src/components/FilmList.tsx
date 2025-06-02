@@ -6,23 +6,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button'; // Importamos Button
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+
+// Importa el tipo Film desde tu slice (ajusta la ruta si es necesario)
+import type { Film } from '../features/filmsSlice';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w300';
 
 const FilmList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate(); 
-  
-  // Ya no necesitamos el observerRef para el scroll infinito
+  const navigate = useNavigate();
   const { items: films, loading, error, page } = useSelector((state: RootState) => state.films);
 
   useEffect(() => {
     dispatch(fetchFilmsThunk());
   }, [dispatch]);
 
-  // Función para cargar más películas al hacer clic en "Ver más"
   const handleLoadMore = () => {
     dispatch(fetchMoreFilmsThunk(page + 1));
   };
@@ -32,15 +32,8 @@ const FilmList: React.FC = () => {
   return (
     <Box sx={{ p: 2 }}>
       <Grid container spacing={2} justifyContent="center">
-        {films.map((film) => (
-          <Grid
-            item
-            key={film.id}
-            xs={6}
-            sm={4}
-            md={3}
-            lg={2}
-          >
+        {films.map((film: Film) => (
+          <Grid item key={film.id} xs={6} sm={4} md={3} lg={2}>
             <Box
               onClick={() => navigate(`/film/${film.id}`)}
               sx={{
@@ -55,7 +48,11 @@ const FilmList: React.FC = () => {
             >
               <CardMedia
                 component="img"
-                image={`${IMAGE_BASE_URL}${film.poster_path}`}
+                image={
+                  film.poster_path
+                    ? `${IMAGE_BASE_URL}${film.poster_path}`
+                    : 'https://via.placeholder.com/300x450?text=No+Image'
+                }
                 alt={film.title}
                 sx={{
                   width: '100%',
@@ -91,27 +88,31 @@ const FilmList: React.FC = () => {
           </Grid>
         ))}
       </Grid>
-      
+
       {/* Botón "Ver más" centrado */}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 2 }}>
-        <Button 
-          variant="contained" 
-          color="primary" 
+        <Button
+          variant="contained"
+          color="primary"
           onClick={handleLoadMore}
           disabled={loading}
-          sx={{ 
+          sx={{
             minWidth: '150px',
-            backgroundColor: '#032541', // Color que coincide con tu barra de navegación
+            backgroundColor: '#032541',
             '&:hover': {
               backgroundColor: '#01192b',
-            }
+            },
           }}
         >
           {loading ? 'Cargando...' : 'Ver más películas'}
         </Button>
       </Box>
-      
-      {loading && <Typography align="center" sx={{ mt: 2 }}>Cargando más películas...</Typography>}
+
+      {loading && (
+        <Typography align="center" sx={{ mt: 2 }}>
+          Cargando más películas...
+        </Typography>
+      )}
     </Box>
   );
 };

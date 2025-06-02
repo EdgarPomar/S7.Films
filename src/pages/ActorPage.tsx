@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchActorDetails, fetchActorMovies } from '../api/tmdb'; // Hauràs d’implementar aquestes funcions
+import { fetchActorDetails, fetchActorMovies } from '../api/tmdb';
 import {
   Box,
   Typography,
@@ -8,18 +8,37 @@ import {
   CircularProgress,
   Card,
   CardContent,
-  Grid,
   Chip,
+  Grid,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const PROFILE_BASE_URL = 'https://image.tmdb.org/t/p/w185';
 
+// Tipado para el actor (ajusta según la respuesta real de la API)
+interface Actor {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  birthday?: string;
+  place_of_birth?: string;
+  biography?: string;
+}
+
+// Tipado para la película (ajusta según la respuesta real de la API)
+interface Movie {
+  id: number;
+  title?: string;
+  name?: string;
+  poster_path: string | null;
+  character?: string;
+}
+
 export default function ActorPage() {
-  const { id } = useParams();
-  const [actor, setActor] = useState<any>(null);
-  const [movies, setMovies] = useState<any[]>([]);
+  const { id } = useParams<{ id: string }>();
+  const [actor, setActor] = useState<Actor | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,30 +65,29 @@ export default function ActorPage() {
       <Box sx={{ p: 3, maxWidth: 900, mx: 'auto' }}>
         <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
           <Avatar
-            src={actor.profile_path ? `${PROFILE_BASE_URL}${actor.profile_path}` : undefined}
-            alt={actor.name}
+            src={actor?.profile_path ? `${PROFILE_BASE_URL}${actor.profile_path}` : undefined}
+            alt={actor?.name}
             sx={{ width: 180, height: 180, borderRadius: 2 }}
           />
           <Box>
-            <Typography variant="h3" gutterBottom>{actor.name}</Typography>
-            {actor.birthday && (
+            <Typography variant="h3" gutterBottom>{actor?.name}</Typography>
+            {actor?.birthday && (
               <Typography variant="body1" gutterBottom>
                 🎂 Data de naixement: {actor.birthday}
               </Typography>
             )}
-            {actor.place_of_birth && (
+            {actor?.place_of_birth && (
               <Typography variant="body1" gutterBottom>
                 📍 Lloc de naixement: {actor.place_of_birth}
               </Typography>
             )}
-            {actor.biography && (
+            {actor?.biography && (
               <Typography variant="body2" sx={{ mt: 2, whiteSpace: 'pre-line' }}>
                 {actor.biography}
               </Typography>
             )}
           </Box>
         </Box>
-
         <Typography variant="h5" gutterBottom>
           Pel·lícules relacionades:
         </Typography>
@@ -95,7 +113,7 @@ export default function ActorPage() {
                 <Avatar
                   variant="square"
                   src={movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : undefined}
-                  alt={movie.title || movie.name}
+                  alt={movie.title || movie.name || ''}
                   sx={{ width: '100%', height: 200, borderRadius: 2 }}
                 />
                 <CardContent>
