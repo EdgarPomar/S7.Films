@@ -25,6 +25,7 @@ const ButtonAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [genreAnchorEl, setGenreAnchorEl] = useState<null | HTMLElement>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [nickName, setNickname] = useState<string | null>(null);
   const [genres, setGenres] = useState<Genre[]>([]);
   const navigate = useNavigate();
 
@@ -32,6 +33,7 @@ const ButtonAppBar: React.FC = () => {
     const getUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUserEmail(session?.user.email ?? null);
+      setNickname(session?.user?.user_metadata?.display_name ?? null);
     };
 
     const loadGenres = async () => {
@@ -44,6 +46,7 @@ const ButtonAppBar: React.FC = () => {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserEmail(session?.user.email ?? null);
+      setNickname(session?.user?.user_metadata?.display_name ?? null);
     });
 
     return () => {
@@ -88,6 +91,7 @@ const ButtonAppBar: React.FC = () => {
     handleClose();
     await supabase.auth.signOut();
     setUserEmail(null);
+    setNickname(null);
     navigate('/');
   };
 
@@ -121,9 +125,9 @@ const ButtonAppBar: React.FC = () => {
             <TMDBLogo />
           </Box>
 
-          {userEmail && (
+          {userEmail && nickName && (
             <Typography variant="body1" sx={{ mr: 2 }}>
-              {userEmail}
+              {nickName}
             </Typography>
           )}
 

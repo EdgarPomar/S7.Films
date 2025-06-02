@@ -5,6 +5,7 @@ import { supabase } from '../api/supabaseClient'; // 👈 importa Supabase
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const [nickName, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -29,10 +30,19 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!nickName || nickName.trim() === "") {
+      setError('Inserta el nickname de tu usuario.');
+      return;
+    }
     // 👉 Registro real con Supabase
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          display_name: nickName,
+        }
+      }
     });
 
     if (signUpError) {
@@ -107,6 +117,21 @@ export default function RegisterPage() {
         type="password"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
+        required
+        fullWidth
+        sx={{
+          input: { color: '#e0e0e0' },
+          bgcolor: '#444',
+          borderRadius: 1,
+        }}
+      />
+
+      <TextField
+        label="Inserta el nick del usuario"
+        variant="filled"
+        type="text"
+        value={nickName}
+        onChange={(e) => setNickname(e.target.value)}
         required
         fullWidth
         sx={{

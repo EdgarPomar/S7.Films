@@ -21,16 +21,16 @@ const Home: React.FC = () => {
         backgroundPosition: 'center',
         backgroundColor: '#000', // fons negre de reserva
         color: 'white',
-        px: 2,
+        px: 2,        
       }}
     >
       <Paper
-        elevation={8}
+        elevation={0}
         sx={{
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
           borderRadius: 3,
           color: 'white',
-          padding: 4,
+          padding: 2,
           textAlign: 'center',
           maxWidth: 600,
         }}
